@@ -4,3 +4,5 @@ yelp_dataset/yelp_academic_dataset_review.json
 yelp_dataset/yelp_academic_dataset_tip.json
 yelp_dataset/yelp_academic_dataset_user.json
 yelp_dataset/Dataset_User_Agreement.pdf
+.vscode/settings.json
+CityReviews.code-workspace
