@@ -11,29 +11,13 @@ import re
 import itertools
 
 sp = spacy.load('en_core_web_md')
-def load_n_lines(filepath, n):
-    """
-    Loads n lines from a json file.
-    Returns DataFrame
-
-    Used for testing cleaning function
-    """
-    f = open(filepath)
-    data = []
-    for line in itertools.islice(f, n):
-        line = line.strip()
-        if not line: continue
-        data.append(json.loads(line))
-    f.close()
-    data = pd.DataFrame(data)
-    return data
 
 def remove_stopwords(text, stopwords=STOP_WORDS):
     """
     Remove stopwords from document.  Naively uses SpaCy Stop words
     """
     text = sp(text)
-    text = [token.text for token in text if token not in stopwords]
+    text = [token.text for token in text if token.text not in stopwords]
     return ' '.join(text)
 
 def remove_digits(text):
@@ -52,26 +36,44 @@ def lemma(text, pos_to_avoid=[]):
     return ' '.join(text)
 
 def clean_doc(text):
-    # remove stopwords
-    text = remove_stopwords(text)
+
     # lemmatize and remove pronouns
     text = lemma(text, ['-PRON-'])
     # remove digits and punctuation
     text = remove_digits(text)
     # change all to lowercase
     text = text.lower()
+    # remove stopwords
+    text = remove_stopwords(text)
+    
     return text
 
-if __name__ == "__main__":
-    import pyspark
-    import databricks.koalas as ks
-    import json
-
-    rdf = load_n_lines('../yelp_dataset/yelp_academic_dataset_review.json', 5)
-    spark = pyspark.sql.SparkSession.builder.getOrCreate()
-    reviews = spark.read.json('../yelp_dataset/yelp_academic_dataset_review.json')
-    business = spark.read.json('../yelp_dataset/yelp_academic_dataset_business.json')
-    business.registerTempTable('business')
-    query = """
-    SELECT categories, city, state, 
+def clean_subtitle(df):
     """
+    Replace subtitle with None if Author's name appears in Subtitle
+    Some subtitles scraped have the author's signature as well. 
+    Ex: "by Jose Marcial Portilla"
+    """
+    assert "author" in df.columns, 'Be sure to include the author in the columns'
+    assert "subtitle" in df.columns, 'Be sure to include the subtitle in the columns'
+
+    ### Is there a faster way to "map" this function?
+    for idx, row in df.iterrows():
+        if re.search(str(row['author']), str(row['subtitle'])):
+            df.iloc[idx]['subtitle'] = None
+    
+
+if __name__ == "__main__":
+    import sqlalchemy
+    import psycopg2
+    import pyspark
+    import pandas as pd
+
+    conn=psycopg2.connect(database='DS_Articles', user='postgres', host='127.0.0.1', port= '5432')
+    query = """
+    SELECT * FROM towards_ds limit 20;
+    """
+    docs = pd.read_sql_query(query, conn)
+    clean_subtitle(docs)
+
+    docs["cleaned_body"] = docs["body"].apply(clean_doc)
