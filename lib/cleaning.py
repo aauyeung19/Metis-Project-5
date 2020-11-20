@@ -35,7 +35,16 @@ def lemma(text, pos_to_avoid=[]):
     text = [token.lemma_ for token in text if token.lemma_ not in pos_to_avoid]
     return ' '.join(text)
 
+def remove_emojis(text):
+    """
+    Remove emojis from text
+    re.sub -- :\w*: for ''
+    """
+    pass
+
 def clean_doc(text):
+
+    # remove emojis
 
     # lemmatize and remove pronouns
     text = lemma(text, ['-PRON-'])
@@ -61,7 +70,32 @@ def clean_subtitle(df):
     for idx, row in df.iterrows():
         if re.search(str(row['author']), str(row['subtitle'])):
             df.iloc[idx]['subtitle'] = None
+
+def sql_delete_duplicates(conn):
+    query = """
+    DELETE FROM towards_ds
+    WHERE article_id NOT IN 
+    (
+        SELECT MAX(article_id) 
+        FROM towards_ds 
+        GROUP BY body
+    );
+    """
+    cursor = conn.cursor()
+    cursor.execute("BEGIN;")
+    cursor.execute(query)
+    cursor.execute("commit;")
     
+def sql_to_csv(filepath, conn)
+    query = f"""
+    COPY towards_ds 
+    to {filepath}
+    DELIMITER ',' CSV HEADER;
+    """
+    cursor = conn.cursor()
+    cursor.execute("BEGIN;")
+    cursor.execute(query)
+    cursor.execute("commit;")
 
 if __name__ == "__main__":
     import sqlalchemy
@@ -70,10 +104,20 @@ if __name__ == "__main__":
     import pandas as pd
 
     conn=psycopg2.connect(database='DS_Articles', user='postgres', host='127.0.0.1', port= '5432')
-    query = """
-    SELECT * FROM towards_ds limit 20;
-    """
+    
+    # Uncomment this if you have duplicates in your raw data! 
+    # sql_delete_duplicates(conn)
+    
+    # Uncomment this to save sql as CSV
+    # Be Sure to change the filepath!
+    # sql_to_csv(''/Users/andrew/Metis-Project-5/src/TDS_articles.csv', conn)
     docs = pd.read_sql_query(query, conn)
-    clean_subtitle(docs)
+    conn.close()
 
+    # Clean Subtitle
+    clean_subtitle(docs)
     docs["cleaned_body"] = docs["body"].apply(clean_doc)
+
+    spark = pyspark.sql.SparkSession.builder.getOrCreate()
+    spark.getActiveSession()
+    articles = spark.read.csv("../src/TDS_articles.csv", header=True, inferSchema=True, sep=',')
