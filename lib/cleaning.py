@@ -39,6 +39,12 @@ def remove_emojis(text):
     Remove emojis from text
     """
     return re.sub(r':\w*:', '', text)
+def remove_multiple_spaces(text):
+    """
+    Remove multiple consecutive spaces from text
+    """
+    text = re.sub(r'\s+', ' ', text.strip())
+    return text
 
 def clean_doc(text):
 
@@ -52,6 +58,8 @@ def clean_doc(text):
     text = text.lower()
     # remove stopwords
     text = remove_stopwords(text)
+    # remove blank spaces
+    text = remove_multiple_spaces(text)
     
     return text
 
@@ -60,6 +68,11 @@ def clean_subtitle(df):
     Replace subtitle with None if Author's name appears in Subtitle
     Some subtitles scraped have the author's signature as well. 
     Ex: "by Jose Marcial Portilla"
+
+    args: 
+        df (DataFrame): Pandas Dataframe with the necessary columns
+    returns: 
+        None: Operation happens inplace.
     """
     assert "author" in df.columns, 'Be sure to include the author in the columns'
     assert "subtitle" in df.columns, 'Be sure to include the subtitle in the columns'
@@ -95,14 +108,21 @@ def sql_to_csv(filepath, conn):
     cursor.execute(query)
     cursor.execute("commit;")
 
+    
+
 if __name__ == "__main__":
     import sqlalchemy
     import psycopg2
     import pyspark
     import pandas as pd
 
-    # conn=psycopg2.connect(database='DS_Articles', user='postgres', host='127.0.0.1', port= '5432')
-    
+    conn=psycopg2.connect(database='DS_Articles', user='postgres', host='127.0.0.1', port= '5432')
+    query = """SELECT * FROM towards_ds;"""
+    df = pd.read_sql_query(query, conn)
+    df.body = df.body.apply(lambda row: " ".join(row.replace('{"', '').replace('"}', '').split('","')))
+    # df.to_csv("../src/TDS_articles.csv", columns=df.columns, sep=',')
+    df['clean_body'] = df.body.apply(clean_doc)
+    df.to_csv("../src/TDS_articles_clean.csv", columns=df.columns, sep=',')
     # Uncomment this if you have duplicates in your raw data! 
     # sql_delete_duplicates(conn)
     
@@ -117,6 +137,6 @@ if __name__ == "__main__":
     # clean_subtitle(docs)
     # docs["cleaned_body"] = docs["body"].apply(clean_doc)
 
-    spark = pyspark.sql.SparkSession.builder.getOrCreate()
-    spark.getActiveSession()
-    articles = spark.read.csv("../src/TDS_articles.csv", header=True, inferSchema=True, sep=',')
+    # spark = pyspark.sql.SparkSession.builder.getOrCreate()
+    # spark.getActiveSession()
+    # articles = spark.read.csv("../src/TDS_articles.csv", header=True, inferSchema=True, sep=',')
