@@ -15,24 +15,23 @@ Articles from Towards Data Science can be clustered into their respective topics
 # Note that the text does not remove stopwords
 import pandas as pd
 
-corpus = pd.read_csv('../src/TDS_document_topic_matrix.csv', sep='\t', index_col=0)
+corpus = pd.read_csv('../src/clean_text.csv', sep='\t', index_col=0)
 corpus = corpus[['article_id', 'text']]
 corpus.set_index('article_id', inplace=True)
 corpus['text'] = corpus['text'].map(str)
-corpus.head()
 
 # Import libraries from Gensim
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
 # tag document
-tagged_corpus = [TaggedDocument(words=row[1][0].split(), tags=str(row[0])) for row in corpus.iterrows()]
+tagged_corpus = [TaggedDocument(words=row[1][0].split(), tags=[str(row[0])]) for row in corpus.iterrows()]
 
 import multiprocessing
 cores = multiprocessing.cpu_count()
-print(cores)
+print(f"number of cores used: {cores}")
 
-max_epochs = 100 # Number of epochs to train
-vec_size = 200 #
+max_epochs = 40 # Number of epochs to train
+vec_size = 100 #
 alpha = 0.025 # Initial Learning Rate
 
 model = Doc2Vec(
@@ -42,21 +41,24 @@ model = Doc2Vec(
     window=5,
     min_count=2,
     min_alpha=0.00025,
-    workers=cores
+    workers=cores,
+    negative=5,
+    epochs=40
 )
-
+print('Building Vocab')
 model.build_vocab(tagged_corpus)
-
-for epoch in range(max_epochs):
+print('Training Model')
+model.train(documents=tagged_corpus, total_examples=model.corpus_count, epochs=model.epochs)
+"""for epoch in range(max_epochs):
     print(f"Iteration {epoch}")
     model.train(
         documents=tagged_corpus,
         total_examples=model.corpus_count,
-        epochs=model.epochs
+        epochs=model.epochs 
     )
     model.alpha -= 0.0002
-    model.min_alpha = model.alpha
+    model.min_alpha = model.alpha """
 
-model.save("../models/d2v.model")
+model.save("../models/d2v_v5.model")
 print("Model Saved")
 
