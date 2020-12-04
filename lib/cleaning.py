@@ -24,7 +24,7 @@ def remove_digits(text):
     """
     Uses Regex to replace anything that is not an alphabetic character with an empty string
     """
-    return re.sub(r'[^A-Za-z\s]', '', text)
+    return re.sub(r'[^A-Za-z\s]', ' ', text)
 
 def lemma(text, pos_to_avoid=[]):
     """
