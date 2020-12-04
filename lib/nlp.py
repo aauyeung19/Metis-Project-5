@@ -3,12 +3,14 @@
 
 Holds NLP Pipe class
 Run this to train the pipelines
+
+# To Do: 
+* Make the fit function - clean the data, fit the vectorizer, and then fit the model.  
 """
 import pickle
 import pandas as pd
-import cleaning
 from sklearn.decomposition import NMF, LatentDirichletAllocation
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 
 class NLPPipe:
    
