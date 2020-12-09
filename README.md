@@ -17,9 +17,11 @@ My goal is to organize the articles into unique clusters and to provide a commen
 35000+ articles published on the TowardsDataScience publication prior to 11/19
 
 ### Methodology
-1. Web Scraping
-2. Grouping Doc2Vec and TF-IDF NMF
-3. Tableau Analysis
+1. Web Scrape articles into PostgreSQL
+2. Clean articles with NLTK
+3. Group Document Embeddings with Doc2Vec and NLTK KMeans
+4. Topic Model cleaned articles with TF-IDF-NMF
+5. Tableau Analysis
 
 ### Technologies
 * Apache Spark
