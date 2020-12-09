@@ -37,6 +37,7 @@ Metis-Project-5
 --lib  
   |--NMF_topic_modeling.ipynb # Topic Modeling Notebook  
   |--cleaning.py # cleaning functions for preparing data  
+  |--db_setup.sql # SQL Function for defining Schemas for Postgres  
   |--doc2vec_clustering.ipynb # Grouping of topic Models  
   |--nlp.py # NLP Pipeline Class  
   |--scraping.py # Scraping Towards Data Science  
@@ -51,4 +52,4 @@ Metis-Project-5
   |   |--topic_model_prototype.ipynb  
 --readme.md  
 --tds_topic_modeling_deck.pdf  
-*note: the models and dataframes are not uploaded to github because of their size.  If you choose to reproduce this project, you will have to create your own PostgreSQL database.*
+*note: the models and dataframes are not uploaded to github because of their size.  If you choose to reproduce this project, you will have to create your own PostgreSQL database using the schemas outlined in db_setup.sql*
