@@ -22,10 +22,10 @@ My goal is to organize the articles into unique clusters and to provide a commen
 3. Tableau Analysis
 
 ### Technologies
-Apache Spark
-Pyspark
-SciKitLearn
-NLTK
-Gensim
-PostgreSQL
-Tableau
+* Apache Spark
+* Pyspark
+* SciKitLearn
+* NLTK
+* Gensim
+* PostgreSQL
+* Tableau
