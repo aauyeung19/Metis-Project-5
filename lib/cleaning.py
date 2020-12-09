@@ -1,7 +1,7 @@
 """
 @Andrew
 
-This module is used for cleaning the reviews of the Yelp Dataset for Topic Modeling
+This module is used for cleaning the reviews of the Towards Data Science Dataset for Topic Modeling
 
 """
 
@@ -123,20 +123,3 @@ if __name__ == "__main__":
     # df.to_csv("../src/TDS_articles.csv", columns=df.columns, sep=',')
     df['clean_body'] = df.body.apply(clean_doc)
     df.to_csv("../src/TDS_articles_clean.csv", columns=df.columns, sep=',')
-    # Uncomment this if you have duplicates in your raw data! 
-    # sql_delete_duplicates(conn)
-    
-    # Uncomment this to save sql as CSV
-    # Be Sure to change the filepath!
-    # sql_to_csv('/Users/andrew/Metis-Project-5/src/TDS_articles.csv', conn)
-    # query  = """SELECT * FROM towards_ds LIMIT 5"""
-    # docs = pd.read_sql_query(query, conn)
-    # conn.close()
-
-    # Clean Subtitle
-    # clean_subtitle(docs)
-    # docs["cleaned_body"] = docs["body"].apply(clean_doc)
-
-    # spark = pyspark.sql.SparkSession.builder.getOrCreate()
-    # spark.getActiveSession()
-    # articles = spark.read.csv("../src/TDS_articles.csv", header=True, inferSchema=True, sep=',')
