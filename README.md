@@ -33,21 +33,21 @@ My goal is to organize the articles into unique clusters and to provide a commen
 * Tableau
 
 ### Directory
-Metis-Project-5
---lib
-  |--NMF_topic_modeling.ipynb # Topic Modeling Notebook
-  |--cleaning.py # cleaning functions for preparing data
-  |--doc2vec_clustering.ipynb # Grouping of topic Models
-  |--nlp.py # NLP Pipeline Class
-  |--scraping.py # Scraping Towards Data Science
-  |--train_LDA.py # Training Pyspark LDA
-  |--train_doc2vec.py # Training Gensim Doc2Vec
-  |--validation.ipynb # Confirmation of Results
-  |--vis_util.py # Visual utility functions
-  |--work
-  |   |--tds_doc2vec_prototype.ipynb
-  |   |--tds_scraping_prototype.ipynb
-  |   |--tm_preparation.ipynb
-  |   |--topic_model_prototype.ipynb
---readme.md
---tds_topic_modeling_deck.pdf
+Metis-Project-5  
+--lib  
+  |--NMF_topic_modeling.ipynb # Topic Modeling Notebook  
+  |--cleaning.py # cleaning functions for preparing data  
+  |--doc2vec_clustering.ipynb # Grouping of topic Models  
+  |--nlp.py # NLP Pipeline Class  
+  |--scraping.py # Scraping Towards Data Science  
+  |--train_LDA.py # Training Pyspark LDA  
+  |--train_doc2vec.py # Training Gensim Doc2Vec  
+  |--validation.ipynb # Confirmation of Results  
+  |--vis_util.py # Visual utility functions  
+  |--work  
+  |   |--tds_doc2vec_prototype.ipynb  
+  |   |--tds_scraping_prototype.ipynb  
+  |   |--tm_preparation.ipynb  
+  |   |--topic_model_prototype.ipynb  
+--readme.md  
+--tds_topic_modeling_deck.pdf  
