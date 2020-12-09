@@ -45,11 +45,15 @@ Metis-Project-5
   |--train_doc2vec.py # Training Gensim Doc2Vec  
   |--validation.ipynb # Confirmation of Results  
   |--vis_util.py # Visual utility functions  
+  
   |--work  
   |   |--tds_doc2vec_prototype.ipynb  
   |   |--tds_scraping_prototype.ipynb  
   |   |--tm_preparation.ipynb  
   |   |--topic_model_prototype.ipynb  
+  
 --readme.md  
---tds_topic_modeling_deck.pdf  
+
+--tds_topic_modeling_deck.pdf
+
 *note: the models and dataframes are not uploaded to github because of their size.  If you choose to reproduce this project, you will have to create your own PostgreSQL database using the schemas outlined in db_setup.sql*
