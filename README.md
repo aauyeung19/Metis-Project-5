@@ -1,10 +1,15 @@
 # What do Data Scientists Blog about?
+### Abstract
+Pivoting careers may seem like a daunting task to some.  In addition to learning new things, you also need to learn the language,  how do you communicate in the community?  Can I help others who are interested in persuing data science take a peak into the profession?  To do this, I wanted to explore the articles highlighted in TowardsDataScience (TDS).  This project breaks down all 35000+ blog posts on TDS into 10 separate documents using two methods.  
+1. A document-term matrix is reduced in dimensionality to 30 subtopics using Non-Negative Matrix Factorization
+2. Docment Vectors are extracted and clustered based on their cosine similarity.  
 
 ### Summary
 NLP Analysis on Towards Data Science Blogs.
 Sometimes picking a project is difficult;
 Someone should make a program that generates project ideas. 
 So, I decided to give it a shot!
+
 ### Impact
 For this project I will do a NLP analysis of the 35000+ articles published in the Towards Data Science publication.  The cross-section of problems to be solved and tools we can use to solve them is huge and we often look online for inspiration.  Sometimes landing onto the Medium publication.  Using those blog posts, I want to provide insight into:
 * rising topics in popularity
@@ -31,6 +36,7 @@ My goal is to organize the articles into unique clusters and to provide a commen
 * Gensim
 * PostgreSQL
 * Tableau
+### Next Steps
 
 ### Directory
 
