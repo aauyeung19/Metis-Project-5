@@ -3,30 +3,10 @@
 Pivoting careers may seem like a daunting task to some.  In addition to learning new things, you also need to learn the language,  how do you communicate in the community?  Can I help others who are interested in persuing data science take a peak into the profession?  To do this, I wanted to explore the articles highlighted in TowardsDataScience (TDS).  This project breaks down all 35000+ blog posts on TDS into 10 separate documents using two methods.  
 1. A document-term matrix is reduced in dimensionality to 30 subtopics using Non-Negative Matrix Factorization
 2. Docment Vectors are extracted and clustered based on their cosine similarity.  
+Currently I am working on a streamlit implementation to classify new documents into their respective cluster.  
 
-### Summary
-NLP Analysis on Towards Data Science Blogs.
-Sometimes picking a project is difficult;
-Someone should make a program that generates project ideas. 
-So, I decided to give it a shot!
-
-### Impact
-For this project I will do a NLP analysis of the 35000+ articles published in the Towards Data Science publication.  The cross-section of problems to be solved and tools we can use to solve them is huge and we often look online for inspiration.  Sometimes landing onto the Medium publication.  Using those blog posts, I want to provide insight into:
-* rising topics in popularity
-* past topics and projects
-* how are data scientists talking within the community
-
-My goal is to organize the articles into unique clusters and to provide a commentary on the context of the publication. 
-
-### Data
-35000+ articles published on the TowardsDataScience publication prior to 11/19
-
-### Methodology
-1. Web Scrape articles into PostgreSQL
-2. Clean articles with NLTK
-3. Group Document Embeddings with Doc2Vec and NLTK KMeans
-4. Topic Model cleaned articles with TF-IDF-NMF
-5. Tableau Analysis
+### Motivation
+Considering more people are blogging and adding content to the blog sphere, I could expand my topic modeling to organize new documents into their respective bins.  This method can be expanded to training a model in a different domain to classify new documents.  
 
 ### Technologies
 * Apache Spark
@@ -36,6 +16,26 @@ My goal is to organize the articles into unique clusters and to provide a commen
 * Gensim
 * PostgreSQL
 * Tableau
+* Streamlit 
+
+### Methodology
+#### Data and Prep
+Data collected was all webscraped from TDS.  The articles are each scraped and inserted into a local Postgres database using [scraping.py](https://github.com/aauyeung19/Topic-Modeling-Towards-Data-Science-NLP/blob/main/lib/scraping.py).  If the scraper encountered an error or if I needed to pause the scraper, I could cross reference the links I had already scraped as to not put too much load onto Medium.com.  
+Data was cleaned using methods written in [cleaning.py](https://github.com/aauyeung19/Topic-Modeling-Towards-Data-Science-NLP/blob/main/lib/cleaning.py) Clean articles and text was necessary for topic modeling with NMF.  The steps in cleaning included:
+* stopword removal
+* lemmatizing
+* removal of emojis and digits
+* removing pronouns 
+
+#### Topic Modeling
+Topic modeling was performed using TF-IDF and NMF on the entire corpus.  A separate doc2vec model was then trained on the corpus extracting document vectors from the articles using Gensim.
+
+#### Clustering
+To organize the documents into groups based on semantic similarity, I used KMeansClusterer to group together the document vectors.  I randomly subsampled my data with a shuffle split and checked different cluster sizes.  I found that 10 clusters yielded the best silhouette score.
+[IMAGE OF SILHOUETTE SCORES]
+
+I then looked at the topic distribution from NMF inside each of the clusters.  I was able to tag them each and visualize each document vector in 3D space a TensorBoard linked [here](http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/aauyeung19/0c6e22d35cd601fbe07fa9f97ff2221c/raw/8463ec2972f8c5e6b295d2462e96b9cbb7c9a4af/projector_config.json)
+
 ### Next Steps
 
 ### Directory
