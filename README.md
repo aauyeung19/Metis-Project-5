@@ -50,7 +50,7 @@ I then looked at the topic distribution from NMF inside each of the clusters.  I
 To allow for user interaction, I set up a streamlit implementation to let users parse unread articles.  This model and practice can be extended to other domains with different articles.  If you want to attempt to run the streamlit implementation feel free to contact me and I can send you the model as it is too large to host on github.
 
 <p align="center">
-  <img alt="Streamlit Application" src="temp">
+  <img alt="Streamlit Application" src="https://github.com/aauyeung19/Topic-Modeling-Towards-Data-Science-NLP/blob/main/vis/streamlit_ss.png?raw=true">
 </p>
 
 ### Next Steps
