@@ -3,7 +3,8 @@
 Pivoting careers may seem like a daunting task to some.  In addition to learning new things, you also need to learn the language,  how do you communicate in the community?  Can I help others who are interested in persuing data science take a peak into the profession?  To do this, I wanted to explore the articles highlighted in TowardsDataScience (TDS).  This project breaks down all 35000+ blog posts on TDS into 10 separate documents using two methods.  
 1. A document-term matrix is reduced in dimensionality to 30 subtopics using Non-Negative Matrix Factorization
 2. Docment Vectors are extracted and clustered based on their cosine similarity.  
-Currently I am working on a streamlit implementation to classify new documents into their respective cluster.  
+
+With these document vectors trained into a model, I was able to implement a model locally.  A user can insert a new unseen article and it will return suggested tags and similar articles from the corpus. 
 
 ### Motivation
 Considering more people are blogging and adding content to the blog sphere, I could expand my topic modeling to organize new documents into their respective bins.  This method can be expanded to training a model in a different domain to classify new documents.  
@@ -45,6 +46,13 @@ I then looked at the topic distribution from NMF inside each of the clusters.  I
   </a>
 </p>
 
+#### Implementation 
+To allow for user interaction, I set up a streamlit implementation to let users parse unread articles.  This model and practice can be extended to other domains with different articles.  If you want to attempt to run the streamlit implementation feel free to contact me and I can send you the model as it is too large to host on github.
+
+<p align="center">
+  <img alt="Streamlit Application" src="temp">
+</p>
+
 ### Next Steps
 
 ### Directory
@@ -67,6 +75,13 @@ Metis-Project-5
   |   |--tds_scraping_prototype.ipynb  
   |   |--tm_preparation.ipynb  
   |   |--topic_model_prototype.ipynb  
+--src
+  |--streamlit_src.csv
+--vis
+  |--Document Vectors Screenshot.png
+  |--silhouette_training.png
+--models
+  |--d2v_v5.model # Insert the model here after decompressing 
 --readme.md  
 --tds_topic_modeling_deck.pdf
 ```
