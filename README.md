@@ -32,7 +32,7 @@ Topic modeling was performed using TF-IDF and NMF on the entire corpus.  A separ
 
 #### Clustering
 To organize the documents into groups based on semantic similarity, I used KMeansClusterer to group together the document vectors.  I randomly subsampled my data with a shuffle split and checked different cluster sizes.  I found that 10 clusters yielded the best silhouette score.
-[IMAGE OF SILHOUETTE SCORES]
+![Silhouette Scores](https://github.com/aauyeung19/Topic-Modeling-Towards-Data-Science-NLP/blob/main/vis/silhouette_training.png)
 
 I then looked at the topic distribution from NMF inside each of the clusters.  I was able to tag them each and visualize each document vector in 3D space a TensorBoard linked [here](http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/aauyeung19/0c6e22d35cd601fbe07fa9f97ff2221c/raw/8463ec2972f8c5e6b295d2462e96b9cbb7c9a4af/projector_config.json)
 
