@@ -63,6 +63,19 @@ def clean_doc(text):
     
     return text
 
+def prep_doc2vec(text):
+    # remove emojis
+    text = remove_emojis(text)
+    # lemmatize and remove pronouns
+    text = lemma(text, ['-PRON-'])
+    # remove digits and punctuation
+    text = remove_digits(text)
+    # change all to lowercase
+    text = text.lower()
+    # remove blank spaces
+    text = remove_multiple_spaces(text)
+    return text
+
 def clean_subtitle(df):
     """
     Replace subtitle with None if Author's name appears in Subtitle
